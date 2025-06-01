@@ -10,22 +10,22 @@ func renderGrid(count int, dataGrid [][]string, cellSize int) {
 	}
 
 	grid[0][0] = "┌───┬"
-	for i := 1; i <= cellSize; i++ {
-		grid[i][0] = fmt.Sprintf("│ %s │", dataGrid[0][0])
+	for i := range cellSize {
+		grid[i+1][0] = fmt.Sprintf("│ %s │", dataGrid[0][0])
 	}
 	grid[cellSize+1][0] = "├───┼"
 
 	for i := 1; i < count-1; i++ {
 		grid[0][i] = "───┬"
-		for j := 1; j <= cellSize; j++ {
-			grid[j][i] = fmt.Sprintf(" %s │", dataGrid[0][i])
+		for j := range cellSize {
+			grid[j+1][i] = fmt.Sprintf(" %s │", dataGrid[0][i])
 		}
 		grid[cellSize+1][i] = "───┼"
 	}
 
 	grid[0][count-1] = "───┐\n"
-	for i := 1; i <= cellSize; i++ {
-		grid[i][count-1] = fmt.Sprintf(" %s │\n", dataGrid[0][count-1])
+	for i := range cellSize {
+		grid[i+1][count-1] = fmt.Sprintf(" %s │\n", dataGrid[0][count-1])
 	}
 	grid[cellSize+1][count-1] = "───┤\n"
 
