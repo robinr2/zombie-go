@@ -2,52 +2,70 @@ package main
 
 import "fmt"
 
-func renderGrid(count int, dataGrid [][]string) {
-	rows := count*2 + 1
+func renderGrid(count int, dataGrid [][]string, cellSize int) {
+	rows := count*cellSize + count + 1
 	grid := make([][]string, rows)
 	for i := range rows {
 		grid[i] = make([]string, count)
 	}
 
 	grid[0][0] = "┌───┬"
-	grid[1][0] = fmt.Sprintf("│ %s │", dataGrid[0][0])
-	grid[2][0] = "├───┼"
+	for i := 1; i <= cellSize; i++ {
+		grid[i][0] = fmt.Sprintf("│ %s │", dataGrid[0][0])
+	}
+	grid[cellSize+1][0] = "├───┼"
 
 	for i := 1; i < count-1; i++ {
 		grid[0][i] = "───┬"
-		grid[1][i] = fmt.Sprintf(" %s │", dataGrid[0][i])
-		grid[2][i] = "───┼"
+		for j := 1; j <= cellSize; j++ {
+			grid[j][i] = fmt.Sprintf(" %s │", dataGrid[0][i])
+		}
+		grid[cellSize+1][i] = "───┼"
 	}
 
 	grid[0][count-1] = "───┐\n"
-	grid[1][count-1] = fmt.Sprintf(" %s │\n", dataGrid[0][count-1])
-	grid[2][count-1] = "───┤\n"
+	for i := 1; i <= cellSize; i++ {
+		grid[i][count-1] = fmt.Sprintf(" %s │\n", dataGrid[0][count-1])
+	}
+	grid[cellSize+1][count-1] = "───┤\n"
 
-	dataGridRowCounter := 0
-	for i := 0; i < rows-3; i += 2 {
-		grid[3+i][0] = fmt.Sprintf("│ %s │", dataGrid[dataGridRowCounter][0])
-		grid[4+i][0] = "├───┼"
+	// dataGridRowCounter := 0
+	for i := cellSize + 3; i < rows-cellSize; i += cellSize + 1 {
+		for j := range cellSize {
+			grid[i-1+j][0] = "│   │"
+		}
+		grid[cellSize-1+i][0] = "├───┼"
 
 		for j := 1; j < count-1; j++ {
-			grid[3+i][j] = fmt.Sprintf(" %s │", dataGrid[dataGridRowCounter][j])
-			grid[4+i][j] = "───┼"
+			for k := range cellSize {
+				grid[i-1+k][j] = "   │"
+			}
+			grid[cellSize-1+i][j] = "───┼"
 		}
 
-		grid[3+i][count-1] = fmt.Sprintf(" %s │\n", dataGrid[dataGridRowCounter][count-1])
-		grid[4+i][count-1] = "───┤\n"
+		for j := range cellSize {
+			grid[i-1+j][count-1] = "   │\n"
+		}
+		grid[cellSize-1+i][count-1] = "───┤\n"
 
-		dataGridRowCounter++
+		// dataGridRowCounter++
 	}
 
-	grid[rows-2][0] = fmt.Sprintf("│ %s │", dataGrid[dataGridRowCounter-1][0])
+	for i := range cellSize {
+		grid[rows-i-2][0] = "│   │"
+	}
 	grid[rows-1][0] = "└───┴"
 
 	for i := 1; i < count-1; i++ {
-		grid[rows-2][i] = fmt.Sprintf(" %s │", dataGrid[dataGridRowCounter-1][i])
+		for j := range cellSize {
+			grid[rows-j-2][i] = "   │"
+		}
 		grid[rows-1][i] = "───┴"
 	}
 
-	grid[rows-2][count-1] = fmt.Sprintf(" %s │\n", dataGrid[dataGridRowCounter-1][count-1])
+	for i := range cellSize {
+		grid[rows-i-2][count-1] = "   │\n"
+	}
 	grid[rows-1][count-1] = "───┘\n"
 
 	for i := range rows {
@@ -66,5 +84,5 @@ func main() {
 			dataGrid[i][j] = fmt.Sprintf("%d", j+1)
 		}
 	}
-	renderGrid(size, dataGrid)
+	renderGrid(size, dataGrid, 3)
 }
