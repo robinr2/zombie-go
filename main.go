@@ -1,76 +1,79 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-func renderGrid(count int, dataGrid [][]string, cellSize int) {
+func renderGrid(count int, dataGrid [][]string, cellHeight int, cellWidth int) {
 	// Initialize grid
-	rows := count*cellSize + count + 1
+	rows := count*cellHeight + count + 1
 	grid := make([][]string, rows)
 	for i := range rows {
 		grid[i] = make([]string, count)
 	}
 
 	// First row
-	grid[0][0] = "┌───┬"
-	for i := range cellSize {
-		grid[i+1][0] = fmt.Sprintf("│ %s │", dataGrid[0][0])
+	grid[0][0] = "┌" + strings.Repeat("─", cellWidth) + "┬"
+	for i := range cellHeight {
+		grid[i+1][0] = "│" + strings.Repeat(" ", cellWidth) + "│"
 	}
-	grid[cellSize+1][0] = "├───┼"
+	grid[cellHeight+1][0] = "├" + strings.Repeat("─", cellWidth) + "┼"
 
 	for i := 1; i < count-1; i++ {
-		grid[0][i] = "───┬"
-		for j := range cellSize {
-			grid[j+1][i] = fmt.Sprintf(" %s │", dataGrid[0][i])
+		grid[0][i] = strings.Repeat("─", cellWidth) + "┬"
+		for j := range cellHeight {
+			grid[j+1][i] = strings.Repeat(" ", cellWidth) + "│"
 		}
-		grid[cellSize+1][i] = "───┼"
+		grid[cellHeight+1][i] = strings.Repeat("─", cellWidth) + "┼"
 	}
 
-	grid[0][count-1] = "───┐\n"
-	for i := range cellSize {
-		grid[i+1][count-1] = fmt.Sprintf(" %s │\n", dataGrid[0][count-1])
+	grid[0][count-1] = strings.Repeat("─", cellWidth) + "┐\n"
+	for i := range cellHeight {
+		grid[i+1][count-1] = strings.Repeat(" ", cellWidth) + "│\n"
 	}
-	grid[cellSize+1][count-1] = "───┤\n"
+	grid[cellHeight+1][count-1] = strings.Repeat("─", cellWidth) + "┤\n"
 
 	// Middle rows
 	// dataGridRowCounter := 0
-	for i := cellSize + 3; i < rows-cellSize; i += cellSize + 1 {
-		for j := range cellSize {
-			grid[i-1+j][0] = "│   │"
+	for i := cellHeight + 3; i < rows-cellHeight; i += cellHeight + 1 {
+		for j := range cellHeight {
+			grid[i-1+j][0] = "│" + strings.Repeat(" ", cellWidth) + "│"
 		}
-		grid[cellSize-1+i][0] = "├───┼"
+		grid[cellHeight-1+i][0] = "├" + strings.Repeat("─", cellWidth) + "┼"
 
 		for j := 1; j < count-1; j++ {
-			for k := range cellSize {
-				grid[i-1+k][j] = "   │"
+			for k := range cellHeight {
+				grid[i-1+k][j] = strings.Repeat(" ", cellWidth) + "│"
 			}
-			grid[cellSize-1+i][j] = "───┼"
+			grid[cellHeight-1+i][j] = strings.Repeat("─", cellWidth) + "┼"
 		}
 
-		for j := range cellSize {
-			grid[i-1+j][count-1] = "   │\n"
+		for j := range cellHeight {
+			grid[i-1+j][count-1] = strings.Repeat(" ", cellWidth) + "│\n"
 		}
-		grid[cellSize-1+i][count-1] = "───┤\n"
+		grid[cellHeight-1+i][count-1] = strings.Repeat("─", cellWidth) + "┤\n"
 
 		// dataGridRowCounter++
 	}
 
-	// Last row
-	for i := range cellSize {
-		grid[rows-i-2][0] = "│   │"
+	// // Last row
+	for i := range cellHeight {
+		grid[rows-i-2][0] = "│" + strings.Repeat(" ", cellWidth) + "│"
 	}
-	grid[rows-1][0] = "└───┴"
+	grid[rows-1][0] = "└" + strings.Repeat("─", cellWidth) + "┴"
 
 	for i := 1; i < count-1; i++ {
-		for j := range cellSize {
-			grid[rows-j-2][i] = "   │"
+		for j := range cellHeight {
+			grid[rows-j-2][i] = strings.Repeat(" ", cellWidth) + "│"
 		}
-		grid[rows-1][i] = "───┴"
+		grid[rows-1][i] = strings.Repeat("─", cellWidth) + "┴"
 	}
 
-	for i := range cellSize {
-		grid[rows-i-2][count-1] = "   │\n"
+	for i := range cellHeight {
+		grid[rows-i-2][count-1] = strings.Repeat(" ", cellWidth) + "│\n"
 	}
-	grid[rows-1][count-1] = "───┘\n"
+	grid[rows-1][count-1] = strings.Repeat("─", cellWidth) + "┘\n"
 
 	// Print cells
 	for i := range rows {
@@ -81,7 +84,11 @@ func renderGrid(count int, dataGrid [][]string, cellSize int) {
 }
 
 func main() {
-	size := 5
+	const (
+		cellHeight = 3
+		cellWidth  = 9
+		size       = 5
+	)
 	dataGrid := make([][]string, size)
 	for i := range size {
 		dataGrid[i] = make([]string, size)
@@ -89,5 +96,6 @@ func main() {
 			dataGrid[i][j] = fmt.Sprintf("%d", j+1)
 		}
 	}
-	renderGrid(size, dataGrid, 3)
+
+	renderGrid(size, dataGrid, cellHeight, cellWidth)
 }
