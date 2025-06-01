@@ -3,12 +3,14 @@ package main
 import "fmt"
 
 func renderGrid(count int, dataGrid [][]string, cellSize int) {
+	// Initialize grid
 	rows := count*cellSize + count + 1
 	grid := make([][]string, rows)
 	for i := range rows {
 		grid[i] = make([]string, count)
 	}
 
+	// First row
 	grid[0][0] = "┌───┬"
 	for i := range cellSize {
 		grid[i+1][0] = fmt.Sprintf("│ %s │", dataGrid[0][0])
@@ -29,6 +31,7 @@ func renderGrid(count int, dataGrid [][]string, cellSize int) {
 	}
 	grid[cellSize+1][count-1] = "───┤\n"
 
+	// Middle rows
 	// dataGridRowCounter := 0
 	for i := cellSize + 3; i < rows-cellSize; i += cellSize + 1 {
 		for j := range cellSize {
@@ -51,6 +54,7 @@ func renderGrid(count int, dataGrid [][]string, cellSize int) {
 		// dataGridRowCounter++
 	}
 
+	// Last row
 	for i := range cellSize {
 		grid[rows-i-2][0] = "│   │"
 	}
@@ -68,6 +72,7 @@ func renderGrid(count int, dataGrid [][]string, cellSize int) {
 	}
 	grid[rows-1][count-1] = "───┘\n"
 
+	// Print cells
 	for i := range rows {
 		for j := range count {
 			fmt.Print(grid[i][j])
