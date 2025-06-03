@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func renderGridAuto(dataGrid [][][]string) {
+func RenderGridAuto(dataGrid [][][]string) [][]string {
 	size := len(dataGrid)
 	maxCellHeight := 0
 	maxCellWidth := 0
@@ -23,11 +23,8 @@ func renderGridAuto(dataGrid [][][]string) {
 			}
 		}
 	}
-	fmt.Println("size: ", size)
-	fmt.Println("height: ", maxCellHeight)
-	fmt.Println("width: ", maxCellWidth)
 	grid := renderGrid(size, maxCellHeight, maxCellWidth, dataGrid)
-	printGrid(grid)
+	return grid
 }
 
 func renderGrid(count int, cellHeight int, cellWidth int, dataGrid [][][]string) [][]string {
@@ -103,174 +100,20 @@ func renderGrid(count int, cellHeight int, cellWidth int, dataGrid [][][]string)
 	return grid
 }
 
-func printGrid(grid [][]string) {
+func printGrid(grid [][]string) string {
+	str := ""
 	for i := range len(grid) {
 		for j := range len(grid[i]) {
-			fmt.Print(grid[i][j])
+			str += grid[i][j]
 		}
 	}
+	return str
 }
 
 func main() {
-
 	dataGrid := [][][]string{
-		{
-			{
-				"123",
-				"456",
-			},
-			{
-				"abc",
-				"def",
-			},
-			{
-				"456",
-				"dsf",
-			},
-			{
-				"wnf",
-				"pba",
-			},
-		},
-		{
-			{
-				"klm",
-				"nop",
-			},
-			{
-				"tuv",
-				"wxy",
-			},
-			{
-				"nsl",
-				"pql",
-			},
-			{
-				"9jf",
-				"0sk",
-			},
-		},
-		{
-			{
-				"hvm",
-				"anp",
-			},
-			{
-				"zuf",
-				"bvh",
-			},
-			{
-				"1jf",
-				"lam",
-			},
-			{
-				"5jf",
-				"29j",
-			},
-		},
-		{
-			{
-				"9fn",
-				"4og",
-			},
-			{
-				"83j",
-				"kme",
-			},
-			{
-				"afd",
-				"38j",
-			},
-			{
-				"3jf",
-				"59j",
-			},
-		},
+		{{"123", "456"}, {"456", "123"}},
+		{{"klm", "fjn"}, {"fjn", "klm"}},
 	}
-
-	// dataGrid := [][][]string{
-	// 	{
-	// 		{
-	// 			"123",
-	// 			"456",
-	// 		},
-	// 		{
-	// 			"abc",
-	// 			"def",
-	// 		},
-	// 		{
-	// 			"456",
-	// 			"dsf",
-	// 		},
-	// 	},
-	// 	{
-	// 		{
-	// 			"tuv",
-	// 			"wxy",
-	// 		},
-	// 		{
-	// 			"nsl",
-	// 			"pql",
-	// 		},
-	// 		{
-	// 			"9jf",
-	// 			"0sk",
-	// 		},
-	// 	},
-	// 	{
-	// 		{
-	// 			"zuf",
-	// 			"bvh",
-	// 		},
-	// 		{
-	// 			"1jf",
-	// 			"lam",
-	// 		},
-	// 		{
-	// 			"5jf",
-	// 			"29j",
-	// 		},
-	// 	},
-	// }
-
-	// dataGrid := [][][]string{
-	// 	{
-	// 		{
-	// 			"123",
-	// 			"456",
-	// 		},
-	// 		{
-	// 			"456",
-	// 			"123",
-	// 		},
-	// 	},
-	// 	{
-	// 		{
-	// 			"klm",
-	// 			"fjn",
-	// 		},
-	// 		{
-	// 			"fjn",
-	// 			"klm",
-	// 		},
-	// 	},
-	// }
-
-	// dataGrid := [][][]string{
-	// 	{
-	// 		{
-	// 			"123",
-	// 			"123",
-	// 			"123",
-	// 		},
-	// 	},
-	// }
-
-	// dataGrid := [][][]string{
-	// 	{},
-	// 	{},
-	// 	{},
-	// }
-
-	renderGridAuto(dataGrid)
+	fmt.Println(printGrid(RenderGridAuto(dataGrid)))
 }
