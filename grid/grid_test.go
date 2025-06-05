@@ -1,4 +1,4 @@
-package main
+package grid
 
 import (
 	"testing"
@@ -25,7 +25,7 @@ func TestRenderGridAuto4x4(t *testing.T) {
 		{{"hvm", "anp"}, {"zuf", "bvh"}, {"1jf", "lam"}, {"5jf", "29j"}},
 		{{"9fn", "4og"}, {"83j", "kme"}, {"afd", "38j"}, {"3jf", "59j"}},
 	}
-	grid := printGrid(RenderGridAuto(dataGrid))
+	grid := PrintGrid(RenderGridAuto(dataGrid))
 	if expectedGrid != grid {
 		t.Fatalf("\nexpected:\n%q\nresult:\n%q", expectedGrid, grid)
 	}
@@ -48,7 +48,7 @@ func TestRenderGrid3x3(t *testing.T) {
 		{{"tuv", "wxy"}, {"nsl", "pql"}, {"9jf", "0sk"}},
 		{{"zuf", "bvh"}, {"1jf", "lam"}, {"5jf", "29j"}},
 	}
-	grid := printGrid(RenderGridAuto(dataGrid))
+	grid := PrintGrid(RenderGridAuto(dataGrid))
 	if expectedGrid != grid {
 		t.Fatalf("\nexpected:\n%q\nresult:\n%q", expectedGrid, grid)
 	}
@@ -68,7 +68,7 @@ func TestRenderGrid2x2(t *testing.T) {
 		{{"klm", "fjn"}, {"fjn", "klm"}},
 	}
 
-	grid := printGrid(RenderGridAuto(dataGrid))
+	grid := PrintGrid(RenderGridAuto(dataGrid))
 	if expectedGrid != grid {
 		t.Fatalf("\nexpected:\n%q\nresult:\n%q", expectedGrid, grid)
 	}
